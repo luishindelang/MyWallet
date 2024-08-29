@@ -1,7 +1,9 @@
 import 'package:mywallet/DB/DataStrukture/ds_account.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_budget.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_cashflow.dart';
+import 'package:mywallet/DB/Sqlite/Dao/dao_transfer.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_account.dart';
+import 'package:mywallet/DB/Sqlite/Tables/t_transfer.dart';
 import 'package:mywallet/DB/Sqlite/sql_connection.dart';
 
 class DaoAccount {
@@ -40,7 +42,8 @@ class DaoAccount {
     final db = await SqlConnection.instance.database;
     var listCashflow = await DaoCashflow.getAll(id);
     var listBudget = await DaoBudget.getAll(id);
-    if (listCashflow.isEmpty && listBudget.isEmpty) {
+    var listTransfer = await DaoTransfer.getAll(id);
+    if (listCashflow.isEmpty && listBudget.isEmpty && listTransfer.isEmpty) {
       await db.delete(
         TAccount.tableName,
         where: "${TAccount.id} = ?",
@@ -58,6 +61,7 @@ class DaoAccount {
       value[TAccount.credit],
       await DaoBudget.getAll(value[TAccount.id]),
       await DaoCashflow.getAll(value[TAccount.id]),
+      await DaoTransfer.getAll(value[TTransfer.id]),
     );
   }
 

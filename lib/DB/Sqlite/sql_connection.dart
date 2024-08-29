@@ -1,6 +1,8 @@
 import 'package:mywallet/DB/Sqlite/Tables/t_account.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_budget.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_cashflow.dart';
+import 'package:mywallet/DB/Sqlite/Tables/t_cashflow_category.dart';
+import 'package:mywallet/DB/Sqlite/Tables/t_transfer.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -8,7 +10,7 @@ class SqlConnection {
   static Database? _db;
   static final SqlConnection instance = SqlConnection._constructor();
 
-  final String dbName = "getactive.db";
+  final String dbName = "mywallet.db";
 
   SqlConnection._constructor();
 
@@ -39,15 +41,17 @@ class SqlConnection {
 
   static Future<void> createTables(Database db) async {
     await db.execute(TAccount.createTable());
+    await db.execute(TCashflowCategory.createTable());
     await db.execute(TBudget.createTable());
     await db.execute(TCashflow.createTable());
-    await db.execute(TCashflow.createTable());
+    await db.execute(TTransfer.createTable());
   }
 
   static Future<void> deleteTables(Database db) async {
-    await db.execute(TAccount.deleteTable());
+    await db.execute(TTransfer.deleteTable());
+    await db.execute(TCashflow.deleteTable());
     await db.execute(TBudget.deleteTable());
-    await db.execute(TCashflow.deleteTable());
-    await db.execute(TCashflow.deleteTable());
+    await db.execute(TCashflowCategory.deleteTable());
+    await db.execute(TAccount.deleteTable());
   }
 }
