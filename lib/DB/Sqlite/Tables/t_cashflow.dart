@@ -17,7 +17,7 @@ class TCashflow {
         $date TEXT NOT NULL,
         $note TEXT NOT NULL,
         $amount REAL NOT NULL,
-        $categoryId TEXT NOT NULL
+        $categoryId TEXT,
         $accountId TEXT NOT NULL,
         FOREIGN KEY ($categoryId) REFERENCES ${TCashflowCategory.tableName}(${TCashflowCategory.id}),
         FOREIGN KEY ($accountId) REFERENCES ${TAccount.tableName}(${TAccount.id})

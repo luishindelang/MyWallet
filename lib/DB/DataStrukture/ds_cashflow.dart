@@ -5,7 +5,7 @@ class DsCashflow {
   DateTime _date;
   String _note;
   double _amount;
-  DsCashflowCategory _category;
+  DsCashflowCategory? _category;
   String _accountId;
 
   DsCashflow(
@@ -21,13 +21,13 @@ class DsCashflow {
   DateTime get getDate => _date;
   String get getNote => _note;
   double get getAmount => _amount;
-  DsCashflowCategory get getCategory => _category;
+  DsCashflowCategory? get getCategory => _category;
   String get getAccountId => _accountId;
 
   set setId(String id) => _id = id;
   set setDate(DateTime date) => _date = date;
   set setNote(String note) => _note = note;
   set setAmount(double amount) => _amount = amount;
-  set setCategory(DsCashflowCategory category) => _category = category;
+  set setCategory(DsCashflowCategory? category) => _category = category;
   set setAccountId(String accountId) => _accountId = accountId;
 }

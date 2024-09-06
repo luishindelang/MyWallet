@@ -22,9 +22,33 @@ class DaoAccount {
     );
   }
 
+  static Future<void> updatePrio(DsAccount account) async {
+    final db = await SqlConnection.instance.database;
+    await db.update(
+      TAccount.tableName,
+      {TAccount.prio: 0},
+      where: "${TAccount.id} = ?",
+      whereArgs: [account.getId],
+    );
+    await db.update(
+      TAccount.tableName,
+      {TAccount.prio: 1},
+      where: "${TAccount.id} != ?",
+      whereArgs: [account.getId],
+    );
+  }
+
+  static Future<void> updateAllToLowPrio() async {
+    final db = await SqlConnection.instance.database;
+    await db.update(TAccount.tableName, {TAccount.prio: 1});
+  }
+
   static Future<List<DsAccount>> getAll() async {
     final db = await SqlConnection.instance.database;
-    List<Map> rawData = await db.query(TAccount.tableName);
+    List<Map> rawData = await db.query(
+      TAccount.tableName,
+      orderBy: "${TAccount.prio} ASC",
+    );
     return _mapperList(rawData);
   }
 
@@ -59,6 +83,7 @@ class DaoAccount {
       value[TAccount.id],
       value[TAccount.name],
       value[TAccount.credit],
+      value[TAccount.prio],
       await DaoBudget.getAll(value[TAccount.id]),
       await DaoCashflow.getAll(value[TAccount.id]),
       await DaoTransfer.getAll(value[TTransfer.id]),
@@ -78,6 +103,7 @@ class DaoAccount {
       TAccount.id: account.getId,
       TAccount.name: account.getName,
       TAccount.credit: account.getCredit,
+      TAccount.prio: account.getPrio,
     };
   }
 }

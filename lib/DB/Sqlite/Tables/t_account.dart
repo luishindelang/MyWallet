@@ -3,6 +3,7 @@ class TAccount {
   static const String id = "Id";
   static const String name = "Name";
   static const String credit = "Credit";
+  static const String prio = "Prio";
 
   static String createTable() {
     return """
@@ -10,6 +11,7 @@ class TAccount {
         $id TEXT PRIMARY KEY,
         $name TEXT NOT NULL,
         $credit REAL NOT NULL,
+        $prio INTEGER NOT NULL
       );
     """;
   }

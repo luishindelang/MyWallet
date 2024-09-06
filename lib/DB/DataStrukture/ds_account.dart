@@ -6,6 +6,7 @@ class DsAccount {
   String _id;
   String _name;
   double _credit;
+  int _prio;
   List<DsBudget> _budgets;
   List<DsCashflow> _cashflows;
   List<DsTransfer> _transfers;
@@ -14,6 +15,7 @@ class DsAccount {
     this._id,
     this._name,
     this._credit, [
+    this._prio = 0,
     this._budgets = const [],
     this._cashflows = const [],
     this._transfers = const [],
@@ -22,6 +24,7 @@ class DsAccount {
   String get getId => _id;
   String get getName => _name;
   double get getCredit => _credit;
+  int get getPrio => _prio;
   List<DsBudget> get getBudgets => _budgets;
   List<DsCashflow> get getCashflows => _cashflows;
   List<DsTransfer> get getTransfers => _transfers;
@@ -29,6 +32,7 @@ class DsAccount {
   set setId(String id) => _id = id;
   set setName(String name) => _name = name;
   set setCredit(double credit) => _credit = credit;
+  set setPrio(int prio) => _prio = prio;
   set setBudgets(List<DsBudget> budgets) => _budgets = budgets;
   set setCashflows(List<DsCashflow> cashflows) => _cashflows = cashflows;
   set setTransfers(List<DsTransfer> transfers) => _transfers = transfers;

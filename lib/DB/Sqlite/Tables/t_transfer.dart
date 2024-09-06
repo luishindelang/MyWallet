@@ -16,7 +16,7 @@ class TTransfer {
         $name TEXT NOT NULL,
         $amount REAL NOT NULL,
         $date TEXT NOT NULL,
-        $fromAccount TEXT NOT NULL
+        $fromAccount TEXT NOT NULL,
         $toAccount TEXT NOT NULL,
         FOREIGN KEY ($fromAccount) REFERENCES ${TAccount.tableName}(${TAccount.id}),
         FOREIGN KEY ($toAccount) REFERENCES ${TAccount.tableName}(${TAccount.id})

@@ -18,7 +18,7 @@ class TBudget {
         $amount REAL NOT NULL,
         $period INTEGER NOT NULL, 
         $accountId TEXT NOT NULL,
-        $categoryId TEXT NOT NULL
+        $categoryId TEXT NOT NULL,
         FOREIGN KEY ($accountId) REFERENCES ${TAccount.tableName}(${TAccount.id}),
         FOREIGN KEY ($categoryId) REFERENCES ${TCashflowCategory.tableName}(${TCashflowCategory.id})
       );

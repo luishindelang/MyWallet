@@ -1,4 +1,5 @@
 import 'package:mywallet/DB/DataStrukture/ds_cashflow.dart';
+import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_cashflow_category.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_cashflow.dart';
 import 'package:mywallet/DB/Sqlite/sql_connection.dart';
@@ -77,12 +78,16 @@ class DaoCashflow {
   //mapper
 
   static Future<DsCashflow> _mapper(Map value) async {
+    DsCashflowCategory? cat;
+    if (value[TCashflow.categoryId] != null) {
+      cat = await DaoCashflowCategory.get(value[TCashflow.categoryId]);
+    }
     return DsCashflow(
       value[TCashflow.id],
       DateTime.parse(value[TCashflow.date]),
       value[TCashflow.note],
       value[TCashflow.amount],
-      await DaoCashflowCategory.get(value[TCashflow.categoryId]),
+      cat,
       value[TCashflow.accountId],
     );
   }
@@ -101,7 +106,7 @@ class DaoCashflow {
       TCashflow.date: cashflow.getDate.toString(),
       TCashflow.note: cashflow.getNote,
       TCashflow.amount: cashflow.getAmount,
-      TCashflow.categoryId: cashflow.getCategory.getId,
+      TCashflow.categoryId: cashflow.getCategory?.getId,
       TCashflow.accountId: cashflow.getAccountId,
     };
   }
