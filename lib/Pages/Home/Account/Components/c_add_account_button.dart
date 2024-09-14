@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mywallet/Components/Controls/c_text_button.dart';
 import 'package:mywallet/DB/Service/s_rout.dart';
-import 'package:mywallet/Pages/add_account.dart';
+import 'package:mywallet/Pages/AddAccount/add_account.dart';
 import 'package:mywallet/Style/style.dart';
 
 class CAddAccountButton extends StatelessWidget {

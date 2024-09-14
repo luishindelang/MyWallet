@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mywallet/Components/Controls/c_icon_button.dart';
-import 'package:mywallet/Components/Elements/c_add_account_button.dart';
+import 'package:mywallet/Pages/Home/Account/Components/c_add_account_button.dart';
 import 'package:mywallet/Components/Elements/c_info_account_button.dart';
-import 'package:mywallet/Components/Widgets/c_select_account_popup.dart';
+import 'package:mywallet/Pages/Home/Account/Components/c_select_account_popup.dart';
 import 'package:mywallet/DB/DataStrukture/ds_account.dart';
 import 'package:mywallet/DB/Service/s_rout.dart';
-import 'package:mywallet/Pages/edit_account.dart';
+import 'package:mywallet/Pages/EditAccount/edit_account.dart';
 import 'package:mywallet/Style/style.dart';
 
 class CAccountsList extends StatelessWidget {
   const CAccountsList({
     super.key,
     required this.title,
-    required this.accountsList,
-    required this.onAccountPressed,
+    required this.activeAccount,
+    required this.accounts,
   });
 
   final String title;
-  final List<DsAccount> accountsList;
-  final Function(DsAccount) onAccountPressed;
+  final DsAccount? activeAccount;
+  final List<DsAccount> accounts;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,7 @@ class CAccountsList extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => CSelectAccountPopup(
-                      accounts: accountsList,
-                      onAccountPressed: (value) => onAccountPressed(value),
+                      accounts: accounts,
                     ),
                   );
                 },
@@ -48,16 +47,20 @@ class CAccountsList extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          accountsList.isNotEmpty
-              ? CInfoAccountButton(
-                  title: accountsList.first.getName,
-                  content: "${accountsList.first.getCredit}€",
-                  onPressed: () => routePush(
-                    context,
-                    EditAccount(account: accountsList.first),
-                  ),
-                )
-              : const CAddAccountButton(),
+          activeAccount != null
+              ? accounts.isNotEmpty
+                  ? CInfoAccountButton(
+                      account: activeAccount!,
+                      onPressed: () => routePush(
+                        context,
+                        EditAccount(account: activeAccount!),
+                      ),
+                    )
+                  : const CAddAccountButton()
+              : CInfoAccountButton(
+                  account: DsAccount("null", "...", 0),
+                  onPressed: () {},
+                ),
           const SizedBox(height: 10),
         ],
       ),

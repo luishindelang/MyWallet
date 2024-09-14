@@ -57,6 +57,8 @@ const popupContextPadding = EdgeInsets.fromLTRB(0, 5, 0, 0);
 
 const addAccountBodyPadding = EdgeInsets.fromLTRB(20, 20, 20, 20);
 
+const selectColorMaring = EdgeInsets.fromLTRB(5, 2.5, 5, 2.5);
+
 //Text-Style
 
 const b9 = FontWeight.w900;

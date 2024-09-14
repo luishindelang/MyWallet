@@ -52,6 +52,18 @@ class DaoAccount {
     return _mapperList(rawData);
   }
 
+  static Future<DsAccount?> getActive() async {
+    final db = await SqlConnection.instance.database;
+    List<Map> rawData = await db.query(
+      TAccount.tableName,
+      where: "${TAccount.prio} = 0",
+    );
+    if (rawData.isEmpty) {
+      return null;
+    }
+    return _mapper(rawData[0]);
+  }
+
   static Future<DsAccount> get(String id) async {
     final db = await SqlConnection.instance.database;
     List<Map> rawData = await db.query(

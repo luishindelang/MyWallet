@@ -66,6 +66,54 @@ class DaoCashflow {
     return _mapperList(rawData);
   }
 
+  static Future<double?> getSumOfPeriodAndCategory(
+    DateTime from,
+    DateTime until,
+    String accountId,
+    String categoryId,
+  ) async {
+    final db = await SqlConnection.instance.database;
+    List<Map> rawData = await db.rawQuery(
+      """
+        SELECT SUM(${TCashflow.amount}) AS Sum
+        FROM ${TCashflow.tableName} 
+        WHERE ${TCashflow.date} >= ? 
+        AND ${TCashflow.date} <= ? 
+        AND ${TCashflow.accountId} = ? 
+        AND ${TCashflow.categoryId} = ?;
+      """,
+      [from.toString(), until.toString(), accountId, categoryId],
+    );
+
+    if (rawData.isNotEmpty) {
+      return rawData.first["Sum"];
+    }
+    return null;
+  }
+
+  static Future<double?> getSumOfPeriod(
+    DateTime from,
+    DateTime until,
+    String accountId,
+  ) async {
+    final db = await SqlConnection.instance.database;
+    List<Map> rawData = await db.rawQuery(
+      """
+        SELECT SUM(${TCashflow.amount}) AS Sum
+        FROM ${TCashflow.tableName} 
+        WHERE ${TCashflow.date} >= ? 
+        AND ${TCashflow.date} <= ? 
+        AND ${TCashflow.accountId} = ?;
+      """,
+      [from.toString(), until.toString(), accountId],
+    );
+
+    if (rawData.isNotEmpty) {
+      return rawData.first["Sum"];
+    }
+    return null;
+  }
+
   static Future<void> delete(String id) async {
     final db = await SqlConnection.instance.database;
     await db.delete(

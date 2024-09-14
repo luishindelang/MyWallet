@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mywallet/Components/Controls/c_icon_button.dart';
 import 'package:mywallet/Components/Controls/c_list_tile.dart';
-import 'package:mywallet/Pages/home.dart';
+import 'package:mywallet/Pages/Home/home.dart';
 import 'package:mywallet/Style/style.dart';
 
 class CScaffoldMenu extends StatelessWidget {

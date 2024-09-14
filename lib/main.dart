@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mywallet/Pages/home.dart';
+import 'package:mywallet/Pages/Home/home.dart';
 
 void main() {
   runApp(const MaterialApp(

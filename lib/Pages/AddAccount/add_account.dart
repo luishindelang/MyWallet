@@ -8,7 +8,7 @@ import 'package:mywallet/DB/DataStrukture/ds_account.dart';
 import 'package:mywallet/DB/Service/s_rout.dart';
 import 'package:mywallet/DB/Service/s_uuid.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_account.dart';
-import 'package:mywallet/Pages/home.dart';
+import 'package:mywallet/Pages/Home/home.dart';
 import 'package:mywallet/Style/style.dart';
 
 class AddAccount extends StatefulWidget {
@@ -22,12 +22,13 @@ class _AddAccountState extends State<AddAccount> {
   final _nameController = TextEditingController();
   final _creditController = TextEditingController();
   bool isSelected = false;
+
+  void route() {
+    routePushAndRemove(context, const Home());
+  }
+
   @override
   Widget build(BuildContext context) {
-    void route() {
-      routePushAndRemove(context, const Home());
-    }
-
     return CScaffold(
       title: "Add new account",
       actions: [

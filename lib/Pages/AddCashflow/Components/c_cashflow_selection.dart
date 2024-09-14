@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mywallet/Components/Controls/c_dropdown_account.dart';
-import 'package:mywallet/Components/Controls/c_dropdown_category.dart';
+import 'package:mywallet/Pages/AddCashflow/Components/c_dropdown_account.dart';
+import 'package:mywallet/Pages/AddCashflow/Components/c_dropdown_category.dart';
 import 'package:mywallet/DB/DataStrukture/ds_account.dart';
 import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
 import 'package:mywallet/Style/style.dart';
