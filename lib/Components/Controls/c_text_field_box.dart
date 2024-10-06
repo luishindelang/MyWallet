@@ -8,7 +8,9 @@ class CTextFieldBox extends StatelessWidget {
     required this.onChanged,
     required this.readOnly,
     this.focus,
-    this.lines = 1,
+    this.hint,
+    this.maxLines = 1,
+    this.minLines = 1,
     this.curserColor = fieldCurser,
     this.borderColor = fieldBorder,
   });
@@ -17,7 +19,9 @@ class CTextFieldBox extends StatelessWidget {
   final Function(String) onChanged;
   final bool readOnly;
   final FocusNode? focus;
-  final int lines;
+  final String? hint;
+  final int maxLines;
+  final int minLines;
   final Color curserColor;
   final Color borderColor;
 
@@ -37,9 +41,11 @@ class CTextFieldBox extends StatelessWidget {
           focusNode: focus,
           readOnly: readOnly,
           keyboardType: TextInputType.multiline,
-          minLines: lines,
-          maxLines: lines,
+          minLines: minLines,
+          maxLines: maxLines,
           decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: textInputHint,
             isDense: true,
             contentPadding: const EdgeInsets.only(bottom: 0),
             focusedBorder: UnderlineInputBorder(

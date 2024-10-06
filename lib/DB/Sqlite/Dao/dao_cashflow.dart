@@ -29,6 +29,7 @@ class DaoCashflow {
       TCashflow.tableName,
       where: "${TCashflow.accountId} = ?",
       whereArgs: [accountId],
+      orderBy: "${TCashflow.date} DESC",
     );
     return _mapperList(rawData);
   }
@@ -56,12 +57,16 @@ class DaoCashflow {
   static Future<List<DsCashflow>> searchByDate(
     DateTime from,
     DateTime until,
+    String accountId,
   ) async {
     final db = await SqlConnection.instance.database;
     List<Map> rawData = await db.query(
       TCashflow.tableName,
-      where: "${TCashflow.date} >= ? AND ${TCashflow.date} <= ?",
-      whereArgs: [from, until],
+      where: """${TCashflow.date} >= ? 
+          AND ${TCashflow.date} <= ? 
+          AND ${TCashflow.accountId} = ?""",
+      whereArgs: [from.toString(), until.toString(), accountId],
+      orderBy: "${TCashflow.date} DESC",
     );
     return _mapperList(rawData);
   }
@@ -120,6 +125,15 @@ class DaoCashflow {
       TCashflow.tableName,
       where: "${TCashflow.id} = ?",
       whereArgs: [id],
+    );
+  }
+
+  static Future<void> deleteAllByAccount(String accountId) async {
+    final db = await SqlConnection.instance.database;
+    await db.delete(
+      TCashflow.tableName,
+      where: "${TCashflow.accountId} = ?",
+      whereArgs: [accountId],
     );
   }
 

@@ -10,7 +10,9 @@ import 'package:mywallet/DB/Service/s_rout.dart';
 import 'package:mywallet/DB/Service/s_uuid.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_account.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_cashflow.dart';
+import 'package:mywallet/Pages/AddCashflow/Components/c_edit_note_popup.dart';
 import 'package:mywallet/Pages/Home/home.dart';
+import 'package:mywallet/Style/style.dart';
 
 class AddCashflow extends StatefulWidget {
   const AddCashflow({
@@ -33,6 +35,7 @@ class AddCashflow extends StatefulWidget {
 
 class _AddCashflowState extends State<AddCashflow>
     with SingleTickerProviderStateMixin {
+  final _controller = TextEditingController();
   late TabController _tabController;
   late int _selectedTypeIndex;
   late IconData _typeIcon;
@@ -90,7 +93,7 @@ class _AddCashflowState extends State<AddCashflow>
     final cashflow = DsCashflow(
       uuid(),
       DateTime.now(),
-      "",
+      _controller.text,
       _numberDouble,
       _categoryValue,
       _accountValue!.getId,
@@ -103,7 +106,7 @@ class _AddCashflowState extends State<AddCashflow>
     final cashflow = DsCashflow(
       uuid(),
       DateTime.now(),
-      "",
+      _controller.text,
       _numberDouble * -1,
       _categoryValue,
       _accountValue!.getId,
@@ -123,7 +126,7 @@ class _AddCashflowState extends State<AddCashflow>
   }
 
   void addCashflow() async {
-    if (_accountValue != null) {
+    if (_accountValue != null && _numberDouble != 0) {
       switch (_selectedTypeIndex) {
         case 2:
           addTransfer();
@@ -140,6 +143,15 @@ class _AddCashflowState extends State<AddCashflow>
     }
   }
 
+  void editText() {
+    showDialog(
+      context: context,
+      builder: (context) => CEditNotePopup(
+        controller: _controller,
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -153,63 +165,79 @@ class _AddCashflowState extends State<AddCashflow>
   @override
   void dispose() {
     _tabController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double appBarHeight = MediaQuery.of(context).padding.top + 120;
+    final double availableBodyHeight = screenHeight - appBarHeight;
+
     return CScaffoldAdd(
       title: "Add Cashflow",
       controller: _tabController,
       onCheckPressed: () => addCashflow(),
       onBottomPressed: (value) => selectType(value),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CShowNumber(
-            icon: _typeIcon,
-            operation: _operation,
-            number: _number,
-            calculation: _calculated,
-          ),
-          Column(
+      child: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: SizedBox(
+          height: availableBodyHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CCashflowSelection(
-                width: screenWidth,
-                isTransfer: _selectedTypeIndex == 2,
-                accountValue: _accountValue,
-                accountOptions: widget.accountOption,
-                onAccountChanged: (value) {
-                  setState(() {
-                    _accountValue = value;
-                  });
-                },
-                categoryValue: _categoryValue,
-                categoryOptions: widget.categoryOptions,
-                onCategoryChanged: (value) {
-                  setState(() {
-                    _categoryValue = value;
-                  });
-                },
-                accountToValue: _accountToValue,
-                accountToOptions: widget.accountOption,
-                onAccountToChanged: (value) {
-                  setState(() {
-                    _accountToValue = value;
-                  });
-                },
+              CShowNumber(
+                icon: _typeIcon,
+                operation: _operation,
+                number: _number,
+                calculation: _calculated,
               ),
-              CCalculator(
-                calcList: _calculated,
-                onPressed: (numberText, operation) => setState(() {
-                  _number = numberText;
-                  _operation = operation;
-                }),
+              Container(
+                color: forground,
+                child: Column(
+                  children: [
+                    CCashflowSelection(
+                      width: screenWidth,
+                      isTransfer: _selectedTypeIndex == 2,
+                      accountValue: _accountValue,
+                      accountOptions: widget.accountOption,
+                      onAccountChanged: (value) {
+                        setState(() {
+                          _accountValue = value;
+                        });
+                      },
+                      categoryValue: _categoryValue,
+                      categoryOptions: widget.categoryOptions,
+                      onCategoryChanged: (value) {
+                        setState(() {
+                          _categoryValue = value;
+                        });
+                      },
+                      accountToValue: _accountToValue,
+                      accountToOptions: widget.accountOption,
+                      onAccountToChanged: (value) {
+                        setState(() {
+                          _accountToValue = value;
+                        });
+                      },
+                      onEditText: () => editText(),
+                    ),
+                    CCalculator(
+                      calcList: _calculated,
+                      onPressed: (numberText, operation) => setState(() {
+                        _number = numberText;
+                        _operation = operation;
+                      }),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

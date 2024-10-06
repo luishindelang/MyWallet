@@ -12,7 +12,10 @@ import 'package:mywallet/Pages/AddCashflow/add_cashflow.dart';
 class Home extends StatefulWidget {
   const Home({
     super.key,
+    this.index = 0,
   });
+
+  final int index;
 
   @override
   State<Home> createState() => _HomeState();
@@ -21,7 +24,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  void route(
+  void routeAddCashflow(
     List<DsAccount> accounts,
     List<DsCashflowCategory> categories,
   ) {
@@ -40,6 +43,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.index = widget.index;
   }
 
   @override
@@ -65,7 +69,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         final categories = await DaoCashflowCategory.getAll();
         final accounts = await DaoAccount.getAll();
         if (accounts.isNotEmpty) {
-          route(accounts, categories);
+          routeAddCashflow(accounts, categories);
         }
       },
     );

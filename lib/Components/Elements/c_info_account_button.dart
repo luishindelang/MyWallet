@@ -16,6 +16,7 @@ class CInfoAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CTextButton(
+      backgroundColor: boxBackround,
       onPressed: () => onPressed(),
       child: Row(
         children: [

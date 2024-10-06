@@ -40,6 +40,7 @@ class _COverviewExpensesState extends State<COverviewExpenses> {
         _until,
         _activeAccount!.getId,
       );
+      if (_expense != null) _expense = _expense! * -1;
       for (var category in _categories) {
         await loadCashflowData(category);
       }
@@ -55,7 +56,7 @@ class _COverviewExpensesState extends State<COverviewExpenses> {
       category.getId,
     );
     if (value != null) {
-      _cashflowData.addAll({value: category.getColor});
+      _cashflowData.addAll({value * -1: category.getColor});
     }
   }
 
@@ -77,7 +78,7 @@ class _COverviewExpensesState extends State<COverviewExpenses> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Last 30 days", style: textS(text)),
+          Text("Last $_lastDays days", style: textS(text)),
           Text(_expense == null ? "..." : "$_expense€", style: textLB(text)),
           const SizedBox(height: 10),
           Row(
@@ -101,11 +102,29 @@ class _COverviewExpensesState extends State<COverviewExpenses> {
                             ),
                           ]
                         : _categories
-                            .map((category) => Text(
-                                  category.getName,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: textS(category.getColor),
+                            .map((category) => Row(
+                                  children: [
+                                    Container(
+                                      height: 16,
+                                      width: 16,
+                                      margin: const EdgeInsets.only(right: 5),
+                                      decoration: BoxDecoration(
+                                        color: category.getColor,
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: borderWith,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(borderRadius),
+                                      ),
+                                    ),
+                                    Text(
+                                      category.getName,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: textS(textSelected),
+                                    ),
+                                  ],
                                 ))
                             .toList()),
               ),

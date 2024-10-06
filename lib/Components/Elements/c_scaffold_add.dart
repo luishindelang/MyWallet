@@ -22,44 +22,51 @@ class CScaffoldAdd extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
-      appBar: AppBar(
-        backgroundColor: forground,
-        title: Text(title, style: textLB(textSelected)),
-        leading: CIconButton(
-          icons: Icons.arrow_back_rounded,
-          size: 35,
-          color: textSelected,
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [
-          CIconButton(
-            icons: Icons.check_rounded,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(120),
+        child: AppBar(
+          backgroundColor: forground,
+          title: Text(title, style: textLB(textSelected)),
+          leading: CIconButton(
+            icons: Icons.arrow_back_rounded,
             size: 35,
             color: textSelected,
-            onPressed: () => onCheckPressed(),
+            onPressed: () => Navigator.pop(context),
           ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: Container(
-            color: forgroundSecondery,
-            child: TabBar(
-              dividerColor: forgroundSecondery,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: textSelected,
-              indicator: const BoxDecoration(
-                color: forgroundSelected,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: CIconButton(
+                icons: Icons.check_rounded,
+                size: 50,
+                color: textSelected,
+                onPressed: () => onCheckPressed(),
               ),
-              labelStyle: textM(textSelected),
-              unselectedLabelStyle: textM(textSelected),
-              overlayColor: WidgetStateProperty.all(buttonSplash),
-              controller: controller,
-              tabs: const [
-                Tab(text: "INCOME"),
-                Tab(text: "EXPENSE"),
-                Tab(text: "TRANSFER"),
-              ],
-              onTap: (value) => onBottomPressed(value),
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: Container(
+              height: 50,
+              color: forgroundSecondery,
+              child: TabBar(
+                dividerColor: forgroundSecondery,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorColor: textSelected,
+                indicator: const BoxDecoration(
+                  color: forgroundSelected,
+                ),
+                labelStyle: textM(textSelected),
+                unselectedLabelStyle: textM(textSelected),
+                overlayColor: WidgetStateProperty.all(buttonSplash),
+                controller: controller,
+                tabs: const [
+                  Tab(text: "INCOME"),
+                  Tab(text: "EXPENSE"),
+                  Tab(text: "TRANSFER"),
+                ],
+                onTap: (value) => onBottomPressed(value),
+              ),
             ),
           ),
         ),

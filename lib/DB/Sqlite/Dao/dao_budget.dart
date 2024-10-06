@@ -71,6 +71,15 @@ class DaoBudget {
     );
   }
 
+  static Future<void> deleteAllByAccount(String accountId) async {
+    final db = await SqlConnection.instance.database;
+    await db.delete(
+      TBudget.tableName,
+      where: "${TBudget.accountId} = ?",
+      whereArgs: [accountId],
+    );
+  }
+
   //mapper
 
   static Future<DsBudget> _mapper(Map value) async {

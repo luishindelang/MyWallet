@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mywallet/Components/Controls/c_icon_button.dart';
 import 'package:mywallet/Pages/AddCashflow/Components/c_dropdown_account.dart';
 import 'package:mywallet/Pages/AddCashflow/Components/c_dropdown_category.dart';
 import 'package:mywallet/DB/DataStrukture/ds_account.dart';
@@ -19,6 +20,7 @@ class CCashflowSelection extends StatelessWidget {
     required this.accountToValue,
     required this.accountToOptions,
     required this.onAccountToChanged,
+    required this.onEditText,
   });
 
   final double width;
@@ -36,6 +38,8 @@ class CCashflowSelection extends StatelessWidget {
   final List<DsAccount> accountToOptions;
   final Function(DsAccount) onAccountToChanged;
 
+  final Function onEditText;
+
   @override
   Widget build(BuildContext context) {
     final String account = isTransfer ? "from" : "Account";
@@ -46,7 +50,7 @@ class CCashflowSelection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           SizedBox(
-            width: (width / 2) - 20,
+            width: (width / 2) - 60,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,7 +69,7 @@ class CCashflowSelection extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: (width / 2) - 20,
+            width: (width / 2) - 60,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -92,6 +96,12 @@ class CCashflowSelection extends StatelessWidget {
                       ),
               ],
             ),
+          ),
+          CIconButton(
+            onPressed: () => onEditText(),
+            icons: Icons.edit_document,
+            color: textSelected,
+            padding: 10,
           ),
         ],
       ),

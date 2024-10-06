@@ -30,22 +30,22 @@ class CShowNumber extends StatelessWidget {
         children: [
           Text(
             cutNum(operationText, operationWidth),
-            style: textM(textSelected),
+            style: textM(text),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(icon, color: textSelected, size: 40),
+              Icon(icon, color: text, size: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     cutNum(number, numberWidth),
-                    style: textCalcNum(textSelected),
+                    style: textCalcNum(text),
                     textAlign: TextAlign.right,
                   ),
                   const SizedBox(width: 10),
-                  Text("EUR", style: textL(textSelected)),
+                  Text("EUR", style: textL(text)),
                 ],
               ),
             ],
@@ -57,7 +57,7 @@ class CShowNumber extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: calculation
                     .map(
-                      (value) => Text(value, style: textM(textSelected)),
+                      (value) => Text(value, style: textM(text)),
                     )
                     .toList(),
               ),

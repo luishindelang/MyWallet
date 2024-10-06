@@ -20,26 +20,7 @@ class _AddCategoryState extends State<AddCategory> {
   final _nameController = TextEditingController();
   late Color _selectedColor;
 
-  List<Color> _colors() {
-    List<Color> allColors = [...Colors.accents, ...Colors.primaries];
-    allColors.sort((a, b) {
-      HSLColor hslA = HSLColor.fromColor(a);
-      HSLColor hslB = HSLColor.fromColor(b);
-
-      int hueComparison = hslA.hue.compareTo(hslB.hue);
-      if (hueComparison != 0) {
-        return hueComparison;
-      } else {
-        int saturationComparison = hslA.saturation.compareTo(hslB.saturation);
-        if (saturationComparison != 0) {
-          return saturationComparison;
-        } else {
-          return hslA.lightness.compareTo(hslB.lightness);
-        }
-      }
-    });
-    return allColors;
-  }
+  final List<Color> _colors = Colors.primaries;
 
   void route() {
     routePushAndRemove(context, const Home());
@@ -48,7 +29,7 @@ class _AddCategoryState extends State<AddCategory> {
   @override
   void initState() {
     super.initState();
-    _selectedColor = _colors().first;
+    _selectedColor = _colors.first;
   }
 
   @override
@@ -93,7 +74,7 @@ class _AddCategoryState extends State<AddCategory> {
                     isExpanded: true,
                     underline: Container(color: Colors.transparent),
                     iconEnabledColor: _selectedColor,
-                    items: _colors().map((color) {
+                    items: _colors.map((color) {
                       return DropdownMenuItem(
                         value: color,
                         child: Container(

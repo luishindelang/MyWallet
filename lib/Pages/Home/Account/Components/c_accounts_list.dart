@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mywallet/Components/Controls/c_icon_button.dart';
+import 'package:mywallet/DB/Sqlite/Dao/dao_account.dart';
 import 'package:mywallet/Pages/Home/Account/Components/c_add_account_button.dart';
 import 'package:mywallet/Components/Elements/c_info_account_button.dart';
 import 'package:mywallet/Pages/Home/Account/Components/c_select_account_popup.dart';
@@ -8,17 +9,28 @@ import 'package:mywallet/DB/Service/s_rout.dart';
 import 'package:mywallet/Pages/EditAccount/edit_account.dart';
 import 'package:mywallet/Style/style.dart';
 
-class CAccountsList extends StatelessWidget {
-  const CAccountsList({
-    super.key,
-    required this.title,
-    required this.activeAccount,
-    required this.accounts,
-  });
+class CAccountList extends StatefulWidget {
+  const CAccountList({super.key});
 
-  final String title;
-  final DsAccount? activeAccount;
-  final List<DsAccount> accounts;
+  @override
+  State<CAccountList> createState() => _CAccountListState();
+}
+
+class _CAccountListState extends State<CAccountList> {
+  List<DsAccount> _accounts = [];
+  DsAccount? _activeAccount;
+
+  void loadData() async {
+    _accounts = await DaoAccount.getAll();
+    _activeAccount = await DaoAccount.getActive();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +43,13 @@ class CAccountsList extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: textL(textSelected)),
+              Text("Active account", style: textL(textSelected)),
               CIconButton(
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (context) => CSelectAccountPopup(
-                      accounts: accounts,
+                      accounts: _accounts,
                     ),
                   );
                 },
@@ -47,20 +59,15 @@ class CAccountsList extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          activeAccount != null
-              ? accounts.isNotEmpty
-                  ? CInfoAccountButton(
-                      account: activeAccount!,
-                      onPressed: () => routePush(
-                        context,
-                        EditAccount(account: activeAccount!),
-                      ),
-                    )
-                  : const CAddAccountButton()
-              : CInfoAccountButton(
-                  account: DsAccount("null", "...", 0),
-                  onPressed: () {},
-                ),
+          _activeAccount != null
+              ? CInfoAccountButton(
+                  account: _activeAccount!,
+                  onPressed: () => routePush(
+                    context,
+                    EditAccount(account: _activeAccount!),
+                  ),
+                )
+              : const CAddAccountButton(),
           const SizedBox(height: 10),
         ],
       ),

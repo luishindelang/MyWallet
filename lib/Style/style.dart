@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //Color
 
-const background = Color.fromARGB(255, 255, 188, 188);
+const background = Color.fromARGB(255, 255, 230, 230);
 const forground = Color.fromARGB(255, 255, 60, 60);
 const forgroundSecondery = Color.fromARGB(255, 255, 90, 90);
 const forgroundSelected = Color.fromARGB(255, 255, 30, 30);
@@ -13,7 +13,7 @@ const textSelected = Color.fromARGB(255, 255, 245, 245);
 const icon = Color.fromARGB(255, 255, 10, 10);
 const iconSelected = Color.fromARGB(255, 255, 245, 245);
 
-const boxBackround = Color.fromARGB(255, 255, 123, 123);
+const boxBackround = Color.fromARGB(255, 255, 164, 164);
 const boxBorder = Color.fromARGB(255, 255, 30, 30);
 const boxShadow = Color.fromARGB(150, 255, 180, 180);
 
@@ -103,4 +103,10 @@ const textInput = TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.w500,
   color: text,
+);
+
+const textInputHint = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w500,
+  color: textSelected,
 );
