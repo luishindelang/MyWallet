@@ -1,11 +1,11 @@
-import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
+import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 
 class DsBudget {
   String _id;
   String _name;
   double _amount;
   int _period;
-  DsCashflowCategory _category;
+  DsCategory _category;
   String _accountId;
 
   DsBudget(
@@ -21,13 +21,13 @@ class DsBudget {
   String get getName => _name;
   double get getAmount => _amount;
   int get getPeriod => _period;
-  DsCashflowCategory get getCategory => _category;
+  DsCategory get getCategory => _category;
   String get getAccountId => _accountId;
 
   set setId(String id) => _id = id;
   set setName(String name) => _name = name;
   set setAmount(double amount) => _amount = amount;
   set setPeriod(int period) => _period = period;
-  set setCategory(DsCashflowCategory category) => _category = category;
+  set setCategory(DsCategory category) => _category = category;
   set setAccountId(String accountId) => _accountId = accountId;
 }

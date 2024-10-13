@@ -1,11 +1,12 @@
-import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
+import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 
 class DsCashflow {
   String _id;
   DateTime _date;
   String _note;
   double _amount;
-  DsCashflowCategory? _category;
+  DsCategory? _category;
+  int _transaktion;
   String _accountId;
 
   DsCashflow(
@@ -14,6 +15,7 @@ class DsCashflow {
     this._note,
     this._amount,
     this._category,
+    this._transaktion,
     this._accountId,
   );
 
@@ -21,13 +23,15 @@ class DsCashflow {
   DateTime get getDate => _date;
   String get getNote => _note;
   double get getAmount => _amount;
-  DsCashflowCategory? get getCategory => _category;
+  DsCategory? get getCategory => _category;
+  int get getTransaktion => _transaktion;
   String get getAccountId => _accountId;
 
   set setId(String id) => _id = id;
   set setDate(DateTime date) => _date = date;
   set setNote(String note) => _note = note;
   set setAmount(double amount) => _amount = amount;
-  set setCategory(DsCashflowCategory? category) => _category = category;
+  set setCategory(DsCategory? category) => _category = category;
+  set setTransaktion(int transaktion) => _transaktion = transaktion;
   set setAccountId(String accountId) => _accountId = accountId;
 }

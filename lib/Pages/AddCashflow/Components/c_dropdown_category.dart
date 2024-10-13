@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
+import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 import 'package:mywallet/Style/style.dart';
 
 class CDropdownCategory extends StatelessWidget {
@@ -15,9 +15,9 @@ class CDropdownCategory extends StatelessWidget {
     this.dropdownColor = buttonBackground,
   });
 
-  final DsCashflowCategory? value;
-  final List<DsCashflowCategory> options;
-  final Function(DsCashflowCategory) onChanged;
+  final DsCategory? value;
+  final List<DsCategory> options;
+  final Function(DsCategory) onChanged;
   final String hint;
   final Color borderColor;
   final Color textColor;

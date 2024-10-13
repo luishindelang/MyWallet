@@ -1,5 +1,5 @@
 import 'package:mywallet/DB/Sqlite/Tables/t_account.dart';
-import 'package:mywallet/DB/Sqlite/Tables/t_cashflow_category.dart';
+import 'package:mywallet/DB/Sqlite/Tables/t_category.dart';
 
 class TCashflow {
   static const String tableName = "Cashflow";
@@ -8,6 +8,7 @@ class TCashflow {
   static const String note = "Name";
   static const String amount = "Amount";
   static const String categoryId = "CategoryId";
+  static const String transaktion = "Transaktion";
   static const String accountId = "AccountId";
 
   static String createTable() {
@@ -18,8 +19,9 @@ class TCashflow {
         $note TEXT NOT NULL,
         $amount REAL NOT NULL,
         $categoryId TEXT,
+        $transaktion INTEGER NOT NULL,
         $accountId TEXT NOT NULL,
-        FOREIGN KEY ($categoryId) REFERENCES ${TCashflowCategory.tableName}(${TCashflowCategory.id}),
+        FOREIGN KEY ($categoryId) REFERENCES ${TCategory.tableName}(${TCategory.id}),
         FOREIGN KEY ($accountId) REFERENCES ${TAccount.tableName}(${TAccount.id})
       );
     """;

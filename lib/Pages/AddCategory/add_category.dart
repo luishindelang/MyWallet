@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mywallet/Components/Controls/c_icon_button.dart';
 import 'package:mywallet/Components/Controls/c_text_field.dart';
 import 'package:mywallet/Components/Elements/c_scaffold.dart';
-import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
+import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 import 'package:mywallet/DB/Service/s_rout.dart';
 import 'package:mywallet/DB/Service/s_uuid.dart';
-import 'package:mywallet/DB/Sqlite/Dao/dao_cashflow_category.dart';
+import 'package:mywallet/DB/Sqlite/Dao/dao_category.dart';
 import 'package:mywallet/Pages/Home/home.dart';
 import 'package:mywallet/Style/style.dart';
 
@@ -43,12 +43,12 @@ class _AddCategoryState extends State<AddCategory> {
           color: textSelected,
           onPressed: () async {
             if (_nameController.text.isNotEmpty) {
-              final category = DsCashflowCategory(
+              final category = DsCategory(
                 uuid(),
                 _nameController.text,
                 _selectedColor,
               );
-              await DaoCashflowCategory.insert(category);
+              await DaoCategory.insert(category);
               route();
             }
           },

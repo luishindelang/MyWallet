@@ -1,4 +1,4 @@
-class TCashflowCategory {
+class TCategory {
   static const String tableName = "CashflowCategory";
   static const String id = "Id";
   static const String name = "Name";

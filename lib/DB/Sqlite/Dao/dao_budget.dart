@@ -1,5 +1,5 @@
 import 'package:mywallet/DB/DataStrukture/ds_budget.dart';
-import 'package:mywallet/DB/Sqlite/Dao/dao_cashflow_category.dart';
+import 'package:mywallet/DB/Sqlite/Dao/dao_category.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_budget.dart';
 import 'package:mywallet/DB/Sqlite/sql_connection.dart';
 
@@ -88,7 +88,7 @@ class DaoBudget {
       value[TBudget.name],
       value[TBudget.amount],
       value[TBudget.period],
-      await DaoCashflowCategory.get(value[TBudget.categoryId]),
+      await DaoCategory.get(value[TBudget.categoryId]),
       value[TBudget.accountId],
     );
   }

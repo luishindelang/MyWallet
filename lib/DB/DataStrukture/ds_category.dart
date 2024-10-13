@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class DsCashflowCategory {
+class DsCategory {
   String _id;
   String _name;
   Color _color;
 
-  DsCashflowCategory(
+  DsCategory(
     this._id,
     this._name,
     this._color,

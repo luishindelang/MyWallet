@@ -5,7 +5,7 @@ import 'package:mywallet/Components/Calculator/c_show_number.dart';
 import 'package:mywallet/Components/Calculator/c_calculator.dart';
 import 'package:mywallet/DB/DataStrukture/ds_account.dart';
 import 'package:mywallet/DB/DataStrukture/ds_cashflow.dart';
-import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
+import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 import 'package:mywallet/DB/Service/s_rout.dart';
 import 'package:mywallet/DB/Service/s_uuid.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_account.dart';
@@ -27,7 +27,7 @@ class AddCashflow extends StatefulWidget {
   final DsAccount selectedAccound;
 
   final List<DsAccount> accountOption;
-  final List<DsCashflowCategory> categoryOptions;
+  final List<DsCategory> categoryOptions;
 
   @override
   State<AddCashflow> createState() => _AddCashflowState();
@@ -45,13 +45,13 @@ class _AddCashflowState extends State<AddCashflow>
 
   DsAccount? _accountValue;
   DsAccount? _accountToValue;
-  DsCashflowCategory? _categoryValue;
+  DsCategory? _categoryValue;
 
   double get _numberDouble => _number.isEmpty ? 0 : double.parse(_number);
 
   void resetAccountCategory() {
     _categoryValue = null;
-    _accountValue = null;
+    _accountToValue = null;
   }
 
   void setIcon(int type) {
@@ -96,6 +96,7 @@ class _AddCashflowState extends State<AddCashflow>
       _controller.text,
       _numberDouble,
       _categoryValue,
+      0,
       _accountValue!.getId,
     );
     await DaoCashflow.insert(cashflow);
@@ -109,6 +110,7 @@ class _AddCashflowState extends State<AddCashflow>
       _controller.text,
       _numberDouble * -1,
       _categoryValue,
+      1,
       _accountValue!.getId,
     );
     await DaoCashflow.insert(cashflow);

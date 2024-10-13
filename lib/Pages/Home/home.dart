@@ -3,10 +3,10 @@ import 'package:mywallet/Components/Elements/c_scaffold_menu.dart';
 import 'package:mywallet/Pages/Home/Account/accounts_page.dart';
 import 'package:mywallet/Pages/Home/Budget/budgets_page.dart';
 import 'package:mywallet/DB/DataStrukture/ds_account.dart';
-import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
+import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 import 'package:mywallet/DB/Service/s_rout.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_account.dart';
-import 'package:mywallet/DB/Sqlite/Dao/dao_cashflow_category.dart';
+import 'package:mywallet/DB/Sqlite/Dao/dao_category.dart';
 import 'package:mywallet/Pages/AddCashflow/add_cashflow.dart';
 
 class Home extends StatefulWidget {
@@ -26,7 +26,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   void routeAddCashflow(
     List<DsAccount> accounts,
-    List<DsCashflowCategory> categories,
+    List<DsCategory> categories,
   ) {
     routePush(
       context,
@@ -66,7 +66,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         BudgetsPage(),
       ],
       onActionPressed: () async {
-        final categories = await DaoCashflowCategory.getAll();
+        final categories = await DaoCategory.getAll();
         final accounts = await DaoAccount.getAll();
         if (accounts.isNotEmpty) {
           routeAddCashflow(accounts, categories);

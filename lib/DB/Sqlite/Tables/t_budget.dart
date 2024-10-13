@@ -1,5 +1,5 @@
 import 'package:mywallet/DB/Sqlite/Tables/t_account.dart';
-import 'package:mywallet/DB/Sqlite/Tables/t_cashflow_category.dart';
+import 'package:mywallet/DB/Sqlite/Tables/t_category.dart';
 
 class TBudget {
   static const String tableName = "Budget";
@@ -20,7 +20,7 @@ class TBudget {
         $accountId TEXT NOT NULL,
         $categoryId TEXT NOT NULL,
         FOREIGN KEY ($accountId) REFERENCES ${TAccount.tableName}(${TAccount.id}),
-        FOREIGN KEY ($categoryId) REFERENCES ${TCashflowCategory.tableName}(${TCashflowCategory.id})
+        FOREIGN KEY ($categoryId) REFERENCES ${TCategory.tableName}(${TCategory.id})
       );
     """;
   }

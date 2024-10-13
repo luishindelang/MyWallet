@@ -3,7 +3,7 @@ import 'package:mywallet/Components/Controls/c_icon_button.dart';
 import 'package:mywallet/Pages/AddCashflow/Components/c_dropdown_account.dart';
 import 'package:mywallet/Pages/AddCashflow/Components/c_dropdown_category.dart';
 import 'package:mywallet/DB/DataStrukture/ds_account.dart';
-import 'package:mywallet/DB/DataStrukture/ds_cashflow_category.dart';
+import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 import 'package:mywallet/Style/style.dart';
 
 class CCashflowSelection extends StatelessWidget {
@@ -30,9 +30,9 @@ class CCashflowSelection extends StatelessWidget {
   final List<DsAccount> accountOptions;
   final Function(DsAccount) onAccountChanged;
 
-  final DsCashflowCategory? categoryValue;
-  final List<DsCashflowCategory> categoryOptions;
-  final Function(DsCashflowCategory) onCategoryChanged;
+  final DsCategory? categoryValue;
+  final List<DsCategory> categoryOptions;
+  final Function(DsCategory) onCategoryChanged;
 
   final DsAccount? accountToValue;
   final List<DsAccount> accountToOptions;
@@ -43,65 +43,73 @@ class CCashflowSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String account = isTransfer ? "from" : "Account";
-    final String category = isTransfer ? "to" : "Category";
     return Container(
       color: boxBackround,
+      height: 60,
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-            width: (width / 2) - 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                Text(account, style: textS(text)),
-                CDropdownAccount(
-                  hint: "choose one",
-                  hintColor: text,
-                  textColor: textSelected,
-                  dropdownColor: boxBackround,
-                  value: accountValue,
-                  options: accountOptions,
-                  onChanged: (value) => onAccountChanged(value),
-                ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: (width / 2) - (isTransfer ? 40 : 60),
+                    child: CDropdownAccount(
+                      hint: account,
+                      hintColor: text,
+                      textColor: textSelected,
+                      dropdownColor: boxBackround,
+                      value: accountValue,
+                      options: accountOptions,
+                      onChanged: (value) => onAccountChanged(value),
+                    ),
+                  ),
+                  isTransfer
+                      ? const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Icon(
+                            Icons.arrow_forward_outlined,
+                            color: icon,
+                          ),
+                        )
+                      : const SizedBox(width: 20),
+                  SizedBox(
+                    width: (width / 2) - (isTransfer ? 40 : 60),
+                    child: isTransfer
+                        ? CDropdownAccount(
+                            hint: "to",
+                            hintColor: text,
+                            textColor: textSelected,
+                            dropdownColor: boxBackround,
+                            value: accountToValue,
+                            options: accountToOptions,
+                            onChanged: (value) => onAccountToChanged(value),
+                          )
+                        : CDropdownCategory(
+                            hint: "Category",
+                            hintColor: text,
+                            textColor: textSelected,
+                            dropdownColor: boxBackround,
+                            value: categoryValue,
+                            options: categoryOptions,
+                            onChanged: (value) => onCategoryChanged(value),
+                          ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          SizedBox(
-            width: (width / 2) - 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                Text(category, style: textS(text)),
-                isTransfer
-                    ? CDropdownAccount(
-                        hint: "choose one",
-                        hintColor: text,
-                        textColor: textSelected,
-                        dropdownColor: boxBackround,
-                        value: accountToValue,
-                        options: accountToOptions,
-                        onChanged: (value) => onAccountToChanged(value),
-                      )
-                    : CDropdownCategory(
-                        hint: "choose one",
-                        hintColor: text,
-                        textColor: textSelected,
-                        dropdownColor: boxBackround,
-                        value: categoryValue,
-                        options: categoryOptions,
-                        onChanged: (value) => onCategoryChanged(value),
-                      ),
-              ],
+          Visibility(
+            visible: !isTransfer,
+            child: CIconButton(
+              onPressed: () => onEditText(),
+              icons: Icons.text_fields_outlined,
+              color: textSelected,
+              padding: 10,
             ),
-          ),
-          CIconButton(
-            onPressed: () => onEditText(),
-            icons: Icons.edit_document,
-            color: textSelected,
-            padding: 10,
           ),
         ],
       ),
