@@ -60,16 +60,16 @@ class _AddAccountState extends State<AddAccount> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Name", style: textL(text)),
               CTextField(
                 controller: _nameController,
                 onChanged: (value) {},
+                hint: "Name",
               ),
               const SizedBox(height: 30),
-              Text("Credit", style: textL(text)),
               CNumberInputField(
                 controller: _creditController,
                 onChanged: (value) {},
+                hint: "Credit",
               ),
               const SizedBox(height: 30),
               Row(

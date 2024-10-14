@@ -6,6 +6,7 @@ class CNumberInputField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.onChanged,
+    required this.hint,
     this.focus,
     this.curserColor = fieldCurser,
     this.borderColor = fieldBorder,
@@ -13,6 +14,7 @@ class CNumberInputField extends StatelessWidget {
 
   final TextEditingController controller;
   final Function(double?) onChanged;
+  final String hint;
   final FocusNode? focus;
   final Color curserColor;
   final Color borderColor;
@@ -32,11 +34,14 @@ class CNumberInputField extends StatelessWidget {
         focusNode: focus,
         decoration: InputDecoration(
           isDense: true,
+          hintText: hint,
           contentPadding: const EdgeInsets.only(bottom: 0),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
             borderSide: BorderSide(width: borderWith, color: borderColor),
           ),
-          enabledBorder: UnderlineInputBorder(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
             borderSide: BorderSide(width: borderWith, color: borderColor),
           ),
         ),

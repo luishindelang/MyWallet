@@ -60,10 +60,10 @@ class _AddCategoryState extends State<AddCategory> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Name", style: textL(text)),
               CTextField(
                 controller: _nameController,
                 onChanged: (value) {},
+                hint: "Name",
               ),
               const SizedBox(height: 30),
               Text("Farbe", style: textL(text)),

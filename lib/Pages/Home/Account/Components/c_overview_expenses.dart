@@ -90,43 +90,46 @@ class _COverviewExpensesState extends State<COverviewExpenses> {
               ),
               SizedBox(
                 width: (screenWidth - 260),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _categories.isEmpty
-                        ? [
-                            Text(
-                              "No categories",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: textS(textSelected),
-                            ),
-                          ]
-                        : _categories
-                            .map((category) => Row(
-                                  children: [
-                                    Container(
-                                      height: 16,
-                                      width: 16,
-                                      margin: const EdgeInsets.only(right: 5),
-                                      decoration: BoxDecoration(
-                                        color: category.getColor,
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: borderWith,
+                height: 172,
+                child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: _categories.isEmpty
+                          ? [
+                              Text(
+                                "No categories",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: textS(textSelected),
+                              ),
+                            ]
+                          : _categories
+                              .map((category) => Row(
+                                    children: [
+                                      Container(
+                                        height: 16,
+                                        width: 16,
+                                        margin: const EdgeInsets.only(right: 5),
+                                        decoration: BoxDecoration(
+                                          color: category.getColor,
+                                          border: Border.all(
+                                            color: Colors.black,
+                                            width: borderWith,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                              borderRadius),
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(borderRadius),
                                       ),
-                                    ),
-                                    Text(
-                                      category.getName,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: textS(textSelected),
-                                    ),
-                                  ],
-                                ))
-                            .toList()),
+                                      Text(
+                                        category.getName,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: textS(textSelected),
+                                      ),
+                                    ],
+                                  ))
+                              .toList()),
+                ),
               ),
             ],
           ),
