@@ -39,6 +39,7 @@ class CSelectAccountPopup extends StatelessWidget {
                             await DaoAccount.updatePrio(value);
                             route();
                           },
+                          onSwitchPressed: () {},
                         ),
                       ))
                   .toList(),

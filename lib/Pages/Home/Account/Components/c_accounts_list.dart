@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mywallet/Components/Controls/c_icon_button.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_account.dart';
 import 'package:mywallet/Pages/Home/Account/Components/c_add_account_button.dart';
 import 'package:mywallet/Components/Elements/c_info_account_button.dart';
@@ -44,18 +43,6 @@ class _CAccountListState extends State<CAccountList> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Active account", style: textL(textSelected)),
-              CIconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => CSelectAccountPopup(
-                      accounts: _accounts,
-                    ),
-                  );
-                },
-                icons: Icons.swap_vert_rounded,
-                color: textSelected,
-              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -66,6 +53,15 @@ class _CAccountListState extends State<CAccountList> {
                     context,
                     EditAccount(account: _activeAccount!),
                   ),
+                  showSwitch: true,
+                  onSwitchPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CSelectAccountPopup(
+                        accounts: _accounts,
+                      ),
+                    );
+                  },
                 )
               : const CAddAccountButton(),
           const SizedBox(height: 10),
