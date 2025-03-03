@@ -1,15 +1,13 @@
-class TBankaccount {
-  static const String tableName = "BankAccount";
+class TSettings {
+  static const String tableName = "Settings";
   static const String id = "Id";
-  static const String name = "Name";
-  static const String credit = "Credit";
+  static const String acitveBankaccount = "ActiveBankaccount";
 
   static String createTable() {
     return """
       CREATE TABLE IF NOT EXISTS $tableName (
         $id TEXT PRIMARY KEY,
-        $name TEXT NOT NULL,
-        $credit REAL NOT NULL
+        $acitveBankaccount TEXT
       );
     """;
   }

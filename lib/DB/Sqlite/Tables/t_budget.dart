@@ -4,8 +4,7 @@ class TBudget {
   static const String name = "Name";
   static const String budget = "Budget";
   static const String period = "Period";
-  static const String accountId = "AccountId";
-  static const String categoryId = "CategoryId";
+  static const String color = "Color";
 
   static String createTable() {
     return """
@@ -13,7 +12,8 @@ class TBudget {
         $id TEXT PRIMARY KEY,
         $name TEXT NOT NULL,
         $budget REAL NOT NULL,
-        $period INTEGER NOT NULL, 
+        $period INTEGER NOT NULL,
+        $color INTEGER NOT NULL
       );
     """;
   }

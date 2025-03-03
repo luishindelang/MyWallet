@@ -9,10 +9,11 @@ class TBankaccountCategory {
   static String createTable() {
     return """
       CREATE TABLE IF NOT EXISTS $tableName (
-        $bankaccountId TEXT PRIMARY KEY,
-        $categoryId TEXT PRIMARY KEY,
+        $bankaccountId TEXT NOT NULL,
+        $categoryId TEXT NOT NULL,
         FOREIGN KEY ($bankaccountId) REFERENCES ${TBankaccount.tableName}(${TBankaccount.id}),
         FOREIGN KEY ($categoryId) REFERENCES ${TCategory.tableName}(${TCategory.id}),
+        PRIMARY KEY ($bankaccountId, $categoryId)
       );
     """;
   }

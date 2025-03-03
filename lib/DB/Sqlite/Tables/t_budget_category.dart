@@ -1,7 +1,7 @@
 import 'package:mywallet/DB/Sqlite/Tables/t_budget.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_category.dart';
 
-class TBankaccountBudget {
+class TBudgetCategory {
   static const String tableName = "BankaccountBudget";
   static const String budgetId = "BudgetId";
   static const String categoryId = "CategoryId";
@@ -9,10 +9,11 @@ class TBankaccountBudget {
   static String createTable() {
     return """
       CREATE TABLE IF NOT EXISTS $tableName (
-        $budgetId TEXT PRIMARY KEY,
-        $categoryId TEXT PRIMARY KEY,
+        $budgetId TEXT NOT NULL,
+        $categoryId TEXT NOT NULL,
         FOREIGN KEY ($budgetId) REFERENCES ${TBudget.tableName}(${TBudget.id}),
         FOREIGN KEY ($categoryId) REFERENCES ${TCategory.tableName}(${TCategory.id}),
+        PRIMARY KEY ($budgetId, $categoryId)
       );
     """;
   }
