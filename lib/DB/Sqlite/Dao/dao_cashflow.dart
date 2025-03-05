@@ -14,7 +14,7 @@ class DaoCashflow {
     final db = await SqlConnection.instance.database;
     await db.insert(
       TCashflow.tableName,
-      _reverseMapper(cashflow, bankaccountId, categoryId),
+      _reverseMapper(cashflow, categoryId, bankaccountId),
     );
   }
 
@@ -42,7 +42,8 @@ class DaoCashflow {
       TCashflow.tableName,
       where: """
         ${TCashflow.bankaccountId} = ? AND
-        ${TCashflow.date} BETWEEN ${fromDate.toString()} AND ${toDate.toString()}
+        ${TCashflow.timeStamp} >= ${fromDate.millisecondsSinceEpoch} AND
+        ${TCashflow.timeStamp} <= ${toDate.millisecondsSinceEpoch}
       """,
       whereArgs: [bankaccountId],
     );
@@ -61,7 +62,8 @@ class DaoCashflow {
       where: """
         ${TCashflow.bankaccountId} = ? AND
         ${TCashflow.type} = ? AND
-        ${TCashflow.date} BETWEEN ${fromDate.toString()} AND ${toDate.toString()}
+        ${TCashflow.timeStamp} >= ${fromDate.millisecondsSinceEpoch} AND
+        ${TCashflow.timeStamp} <= ${toDate.millisecondsSinceEpoch}
       """,
       whereArgs: [bankaccountId, type],
     );
@@ -82,8 +84,8 @@ class DaoCashflow {
         ${TCashflow.bankaccountId} = ? AND
         ${TCashflow.type} = ? AND
         ${TCashflow.categoryId} = ? AND
-        ${TCashflow.categoryId}
-        ${TCashflow.date} BETWEEN ${fromDate.toString()} AND ${toDate.toString()}
+        ${TCashflow.timeStamp} >= ${fromDate.millisecondsSinceEpoch} AND
+        ${TCashflow.timeStamp} <= ${toDate.millisecondsSinceEpoch}
       """,
       whereArgs: [bankaccountId, type, categoriyId],
     );
@@ -100,10 +102,12 @@ class DaoCashflow {
     List<Map> rawData = await db.rawQuery("""
       SELECT SUM(${TCashflow.amount}) as SumAmount
       FROM ${TCashflow.tableName}
-      WHERE ${TCashflow.bankaccountId} = $bankaccountId AND
+      WHERE ${TCashflow.bankaccountId} = '$bankaccountId' AND
         ${TCashflow.type} = $type AND
-        ${TCashflow.date} BETWEEN ${fromDate.toString()} AND ${toDate.toString()};
+        ${TCashflow.timeStamp} >= ${fromDate.millisecondsSinceEpoch} AND
+        ${TCashflow.timeStamp} <= ${toDate.millisecondsSinceEpoch};
     """);
+    if (rawData.isEmpty || rawData[0]["SumAmount"] == null) return 0;
     return rawData[0]["SumAmount"];
   }
 
@@ -118,11 +122,13 @@ class DaoCashflow {
     List<Map> rawData = await db.rawQuery("""
       SELECT SUM(${TCashflow.amount}) as SumAmount
       FROM ${TCashflow.tableName}
-      WHERE ${TCashflow.bankaccountId} = $bankaccountId AND
+      WHERE ${TCashflow.bankaccountId} = '$bankaccountId' AND
         ${TCashflow.type} = $type AND
-        ${TCashflow.categoryId} = $categoriyId AND
-        ${TCashflow.date} BETWEEN ${fromDate.toString()} AND ${toDate.toString()};
+        ${TCashflow.categoryId} = '$categoriyId' AND
+        ${TCashflow.timeStamp} >= ${fromDate.millisecondsSinceEpoch} AND
+        ${TCashflow.timeStamp} <= ${toDate.millisecondsSinceEpoch};
     """);
+    if (rawData.isEmpty || rawData[0]["SumAmount"] == null) return 0;
     return rawData[0]["SumAmount"];
   }
 
@@ -134,8 +140,15 @@ class DaoCashflow {
   ) async {
     final db = await SqlConnection.instance.database;
     String sqlWhereCategires = "";
-    for (var category in budget.getCategories) {
-      sqlWhereCategires += "${TCashflow.categoryId} = ${category.getId} AND ";
+    if (budget.getCategories.isNotEmpty) {
+      sqlWhereCategires += "(";
+      for (var category in budget.getCategories) {
+        sqlWhereCategires += "${TCashflow.categoryId} = '${category.getId}'";
+        if (category != budget.getCategories.last) {
+          sqlWhereCategires += " OR ";
+        }
+      }
+      sqlWhereCategires += ") AND";
     }
     List<Map> rawData = await db.rawQuery("""
       SELECT 
@@ -148,10 +161,12 @@ class DaoCashflow {
           THEN ${TCashflow.amount} ELSE 0 END
         ), 0) AS Saldo
       FROM ${TCashflow.tableName}
-      WHERE ${TCashflow.bankaccountId} = $bankaccountId AND
+      WHERE ${TCashflow.bankaccountId} = '$bankaccountId' AND
         $sqlWhereCategires
-        ${TCashflow.date} BETWEEN ${fromDate.toString()} AND ${toDate.toString()};
+        ${TCashflow.timeStamp} >= ${fromDate.millisecondsSinceEpoch} AND
+        ${TCashflow.timeStamp} <= ${toDate.millisecondsSinceEpoch};
     """);
+    if (rawData.isEmpty || rawData[0]["Saldo"] == null) return 0;
     return rawData[0]["Saldo"];
   }
 
@@ -161,7 +176,7 @@ class DaoCashflow {
     DsCategory category = await DaoCategory.get(value[TCashflow.categoryId]);
     return DsCashflow(
       value[TCashflow.type],
-      DateTime.parse(value[TCashflow.date]),
+      DateTime.fromMillisecondsSinceEpoch(value[TCashflow.timeStamp]).toUtc(),
       value[TCashflow.amount],
       value[TCashflow.id],
       value[TCashflow.note],
@@ -185,7 +200,7 @@ class DaoCashflow {
     return {
       TCashflow.id: cashflow.getId,
       TCashflow.type: cashflow.getType,
-      TCashflow.date: cashflow.getDate.toString(),
+      TCashflow.timeStamp: cashflow.getDate.millisecondsSinceEpoch,
       TCashflow.amount: cashflow.getAmount,
       TCashflow.note: cashflow.getNote,
       TCashflow.categoryId: categoryId,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mywallet/DB/DataStrukture/ds_budget.dart';
-import 'package:mywallet/DB/DataStrukture/ds_category.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_category.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_budget.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_budget_category.dart';
@@ -26,25 +25,16 @@ class DaoBudget {
       where: "${TBudget.id} = ?",
       whereArgs: [budget.getId],
     );
-
-    List<DsCategory> oldCategories = await DaoCategory.getBudgetCategories(
-      budget.getId,
+    await db.delete(
+      TBudgetCategory.tableName,
+      where: "${TBudgetCategory.budgetId} = ?",
+      whereArgs: [budget.getId],
     );
-    for (var oldCategory in oldCategories) {
-      for (var newCategory in budget.getCategories) {
-        if (oldCategory.getId != newCategory.getId) {
-          await db.delete(
-            TBudgetCategory.tableName,
-            where: """${TBudgetCategory.budgetId} = ? AND 
-              ${TBudgetCategory.categoryId} = ?""",
-            whereArgs: [budget.getId, oldCategory.getId],
-          );
-          await db.insert(TBudgetCategory.tableName, {
-            TBudgetCategory.budgetId: budget.getId,
-            TBudgetCategory.categoryId: newCategory.getId,
-          });
-        }
-      }
+    for (var category in budget.getCategories) {
+      await db.insert(TBudgetCategory.tableName, {
+        TBudgetCategory.budgetId: budget.getId,
+        TBudgetCategory.categoryId: category.getId,
+      });
     }
   }
 

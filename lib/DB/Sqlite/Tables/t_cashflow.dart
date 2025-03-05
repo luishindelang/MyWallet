@@ -5,7 +5,7 @@ class TCashflow {
   static const String tableName = "Cashflow";
   static const String id = "Id";
   static const String type = "Type";
-  static const String date = "Date";
+  static const String timeStamp = "TimeStamp";
   static const String amount = "Amount";
   static const String note = "Note";
   static const String categoryId = "CategoryId";
@@ -16,7 +16,7 @@ class TCashflow {
       CREATE TABLE IF NOT EXISTS $tableName (
         $id TEXT PRIMARY KEY,
         $type INTEGER NOT NULL,
-        $date TEXT NOT NULL,
+        $timeStamp INTEGER NOT NULL,
         $amount REAL NOT NULL,
         $note TEXT NOT NULL,
         $categoryId TEXT NOT NULL,

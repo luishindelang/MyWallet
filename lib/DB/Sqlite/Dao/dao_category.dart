@@ -41,9 +41,8 @@ class DaoCategory {
       SELECT c.*
       FROM ${TCategory.tableName} c
       LEFT JOIN ${TBankaccountCategory.tableName} ac ON 
-        c.${TCategory.id} = ac.${TBankaccountCategory.categoryId} AND 
-        ac.${TBankaccountCategory.bankaccountId} = $bankaccountId
-      WHERE ac.${TBankaccountCategory.bankaccountId} IS NOT NULL OR 
+        c.${TCategory.id} = ac.${TBankaccountCategory.categoryId}
+      WHERE ac.${TBankaccountCategory.bankaccountId} = '$bankaccountId' OR 
         ac.${TBankaccountCategory.categoryId} IS NULL;
     """);
     return _mapperList(rawData);
@@ -55,8 +54,8 @@ class DaoCategory {
       SELECT c.*
       FROM ${TCategory.tableName} c
       LEFT JOIN ${TBudgetCategory.tableName} bc ON
-        c.${TCategory.id} = bc.${TBudgetCategory.categoryId} AND
-        bc.${TBudgetCategory.budgetId} = $budgetId
+        c.${TCategory.id} = bc.${TBudgetCategory.categoryId}
+      WHERE bc.${TBudgetCategory.budgetId} = '$budgetId';
     """);
     return _mapperList(rawData);
   }

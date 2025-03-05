@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mywallet/DB/DataStrukture/ds_bankaccount.dart';
 import 'package:mywallet/DB/Sqlite/Dao/dao_bankaccount.dart';
-import 'package:mywallet/DB/Sqlite/Tables/t_bankaccount.dart';
 import 'package:mywallet/DB/Sqlite/sql_connection.dart';
 
 void main() {

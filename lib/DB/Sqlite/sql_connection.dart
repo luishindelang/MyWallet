@@ -1,6 +1,7 @@
 import 'package:mywallet/DB/Sqlite/Tables/t_bankaccount.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_bankaccount_category.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_budget.dart';
+import 'package:mywallet/DB/Sqlite/Tables/t_budget_category.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_cashflow.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_category.dart';
 import 'package:mywallet/DB/Sqlite/Tables/t_settings.dart';
@@ -36,13 +37,14 @@ class SqlConnection {
 
   static Future<void> resetDB() async {
     final db = await SqlConnection.instance.database;
-    deleteTables(db);
-    createTables(db);
+    await deleteTables(db);
+    await createTables(db);
   }
 
   static Future<void> createTables(Database db) async {
     await db.execute(TBankaccount.createTable());
     await db.execute(TBankaccountCategory.createTable());
+    await db.execute(TBudgetCategory.createTable());
     await db.execute(TBudget.createTable());
     await db.execute(TCashflow.createTable());
     await db.execute(TCategory.createTable());
@@ -52,6 +54,7 @@ class SqlConnection {
   static Future<void> deleteTables(Database db) async {
     await db.execute(TBankaccount.deleteTable());
     await db.execute(TBankaccountCategory.deleteTable());
+    await db.execute(TBudgetCategory.deleteTable());
     await db.execute(TBudget.deleteTable());
     await db.execute(TCashflow.deleteTable());
     await db.execute(TCategory.deleteTable());
