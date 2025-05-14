@@ -149,6 +149,7 @@ class _NewBudgetPopupState extends State<NewBudgetPopup> {
             CDropDownColorSelect(
               changedItem: (color) => _selectedColor = color,
               options: _colors,
+              selectedColor: _selectedColor,
             ),
             SizedBox(height: 20),
             CPopupActionButtons(

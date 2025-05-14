@@ -6,10 +6,12 @@ class CDropDownColorSelect extends StatefulWidget {
     super.key,
     required this.changedItem,
     required this.options,
+    this.selectedColor,
   });
 
   final List<Color> options;
   final Function(Color) changedItem;
+  final Color? selectedColor;
 
   @override
   State<CDropDownColorSelect> createState() => _CDropDownColorSelectState();
@@ -19,7 +21,7 @@ class _CDropDownColorSelectState extends State<CDropDownColorSelect> {
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
   bool _isDropdownOpen = false;
-  Color _selectedColor = Colors.white;
+  late Color _selectedColor;
 
   void _toggleDropdown() {
     if (_isDropdownOpen) {
@@ -99,6 +101,16 @@ class _CDropDownColorSelectState extends State<CDropDownColorSelect> {
             ),
           ),
     );
+  }
+
+  @override
+  void initState() {
+    if (widget.selectedColor != null) {
+      _selectedColor = widget.selectedColor!;
+    } else {
+      _selectedColor = widget.options.first;
+    }
+    super.initState();
   }
 
   Widget _buildMenuItem(Color color) {
