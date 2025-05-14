@@ -141,9 +141,16 @@ class _CDropDownState<T> extends State<CDropDown<T>> {
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_selectedItem, style: dropDownText),
+              Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  _selectedItem,
+                  style: dropDownText,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               SizedBox(width: 8),
               Icon(
                 Icons.keyboard_arrow_down_outlined,

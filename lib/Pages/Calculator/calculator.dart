@@ -85,7 +85,6 @@ class _CalculatorState extends State<Calculator> {
                 setState(() {
                   _type = type;
                 });
-                print(type);
               },
             ),
             SizedBox(height: 15),

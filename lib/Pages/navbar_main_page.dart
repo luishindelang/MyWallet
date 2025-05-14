@@ -14,8 +14,8 @@ class NavbarMainPage extends StatefulWidget {
 }
 
 class _NavbarMainPageState extends State<NavbarMainPage> {
-  int _selectedIndex = 2;
-  final PageController _pageController = PageController(initialPage: 2);
+  int _selectedIndex = 0;
+  late PageController _pageController;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -26,6 +26,12 @@ class _NavbarMainPageState extends State<NavbarMainPage> {
       duration: Duration(milliseconds: 400),
       curve: Curves.ease,
     );
+  }
+
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: _selectedIndex);
+    super.initState();
   }
 
   @override

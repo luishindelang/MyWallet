@@ -69,6 +69,7 @@ const accountCreditText = TextStyle(
   color: positiveTextColor,
   fontSize: 40,
   fontWeight: b5,
+  height: 1,
 );
 
 const negativeMonthlySaldoText = TextStyle(
@@ -206,5 +207,17 @@ const caclulatorResult = TextStyle(
 const caclulatorLastOperation = TextStyle(
   color: textColor,
   fontSize: 24,
+  fontWeight: b5,
+);
+
+const selectAccountTitle = TextStyle(
+  color: textColor,
+  fontSize: 20,
+  fontWeight: b5,
+);
+
+const selectAccountAmount = TextStyle(
+  color: textColor,
+  fontSize: 18,
   fontWeight: b5,
 );

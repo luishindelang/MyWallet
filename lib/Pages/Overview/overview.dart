@@ -13,6 +13,11 @@ class Overview extends StatefulWidget {
 
 class _OverviewState extends State<Overview> {
   DsBankaccount? bankaccount;
+  final List<DsBankaccount> accounts = [
+    DsBankaccount("Main mit einem ganz langen namen warum auch immer", 1000),
+    DsBankaccount("Sub", 100),
+    DsBankaccount("Div", 10),
+  ];
 
   // void setAccount() async {
   //   Future.delayed(const Duration(seconds: 3), () {
@@ -33,7 +38,15 @@ class _OverviewState extends State<Overview> {
     return SafeArea(
       child: Column(
         children: [
-          AccountOverview(bankaccount: bankaccount),
+          AccountOverview(
+            bankaccount: bankaccount,
+            allBankaccounts: accounts,
+            changedAccount: (newAccount) {
+              setState(() {
+                bankaccount = newAccount;
+              });
+            },
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
